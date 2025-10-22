@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Fira Code",
+            monospace;
+}
+
+body {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 2rem;
+      justify-content: center;
+      padding: 2rem;
+      color: azure;
+      background: linear-gradient(to right, #00dbde, #fc00ff);
+      height: 100vh;
+      width: 100%;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.main-div {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      width: 100%;
+      height: auto;
+      padding: 2rem 4rem;
+      border-radius: 1rem;
+}
+
+.container {
+      width: 100%;
+      height: auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      border-radius: 1rem;
+      position: relative;
+}
+
+.content-div {
+      width: 50%;
+      padding: 2rem;
+      text-align: center;
+}
+
+.content-div h2 {
+      font-size: 2.8rem;
+}
+
+.game-div {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+}
+
+.btn-container {
+      width: 25rem;
+      height: 25rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 2rem;
+      position: fixed;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.btn-container::before {
+      position: absolute;
+      content: "";
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      z-index: 1;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+
+button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      padding: 1rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      font-size: 1.3rem;
+      color: azure;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+
+      &:active {
+            scale: 0.99;
+      }
+}
+
+.btn {
+      height: 71%;
+      width: 71%;
+      position: absolute;
+}
+
+.red {
+      background-color: #e74c3c;
+      transform: rotate(45deg);
+      bottom: -35%;
+
+      &:hover {
+            background-color: #f41b03;
+      }
+}
+
+.yellow {
+      background-color: #eec523;
+      transform: rotate(45deg);
+      left: -35%;
+
+      &:hover {
+            background-color: #ffcc00;
+      }
+}
+
+.green {
+      background-color: #2ecc71;
+      transform: rotate(45deg);
+      right: -35%;
+
+      &:hover {
+            background-color: #00ff6a;
+      }
+}
+
+.blue {
+      background-color: #3498db;
+      transform: rotate(45deg);
+      top: -35%;
+
+      &:hover {
+            background-color: #018fed;
+      }
+}
+
+.flash {
+      background-color: #fff;
+}
+
+.bgcolor {
+      background-color: green;
+}
+
+@media (width<=1051px) {
+      .container {
+            flex-direction: column;
+            padding: 1rem;
+            height: auto;
+      }
+
+      body {
+            padding: 0;
+      }
+
+      .main-div {
+            padding: 1rem 2rem;
+      }
+
+      .content-div {
+            padding: 1rem;
+            width: 100%;
+      }
+
+      .game-div {
+            padding: 0;
+            width: 100%;
+      }
+}
