@@ -1,83 +1,82 @@
 let gameSeq = [];
 let userSeq = [];
-let btns = ["yellow", "red", "blue", "green"];
+const buttonColors = ["red", "green", "blue", "yellow"];
 
 let started = false;
 let level = 0;
+let highScore = 0;
 
-let start = document.querySelector('.start');
-let h2 = document.querySelector('h2');
+const statusHeading = document.getElementById("status-heading");
+const highScoreSpan = document.getElementById("high-score");
+const buttons = document.querySelectorAll(".simon-btn");
 
-start.addEventListener('click', function () {
-      if (started == false) {
-            console.log('game started');
-            started = true
-            levelUp();
-            start.innerText = "Playing"
-      }
-})
 
-function gameFlash(btn, color) {
-      btn.classList.add(color);
-      setTimeout(function () {
-            btn.classList.remove(color);
-      }, 1000);
-}
-function highScore(lv) {
-      let Score = 0;
-      Score += lv;
-      if (Score == lv) {
-            level = Score;
-            h2.innerHTML = `Game Is Over! <br> High Score : ${Score}`;
-      }
+document.addEventListener("keydown", function () {
+  if (!started) {
+    started = true;
+    nextSequence();
+  }
+});
+
+
+function nextSequence() {
+  userSeq = [];
+  level++;
+  statusHeading.innerText = `Level ${level}`;
+  const randomColor = buttonColors[Math.floor(Math.random() * 4)];
+  gameSeq.push(randomColor);
+  flashButton(randomColor);
 }
 
-function levelUp() {
-      userSeq = [];
-      level++;
-      h2.innerText = `Game Level : ${level}`;
-      let randColor = btns[Math.floor(Math.random() * 4)];
-      let randBtn = document.querySelector(`.${randColor}`);
-      gameSeq.push(randColor);
-      console.log(gameSeq);
-      gameFlash(randBtn, "flash");
+function flashButton(color) {
+  const btn = document.getElementById(color);
+  if (btn) {
+    btn.classList.add("flash");
+    setTimeout(() => {
+      btn.classList.remove("flash");
+    }, 250);
+  }
 }
 
-function checkAns(indx) {
-      if (userSeq[indx] === gameSeq[indx]) {
-            console.log('same value');
-            if (userSeq.length === gameSeq.length) {
-                  setTimeout(levelUp, 1000);
-            }
-      } else {
-            highScore(level);
-            start.innerText = "Reset";
-            let mainDiv = document.querySelector('.main-div');
-            mainDiv.style.backgroundColor = "red";
-            setTimeout(function () {
-                  let mainDiv = document.querySelector('.main-div');
-                  mainDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                  mainDiv.style.backDropFilter = 'blur(20px)';
-            }, 3000)
-            reset();
-      }
-}
-function reset() {
-      started = false;
-      gameSeq = [];
-      userSeq = [];
-      level = 0;
+buttons.forEach(btn => {
+  btn.addEventListener("click", function (event) {
+    if (started) {
+      const userChosenColor = event.target.id;
+      userSeq.push(userChosenColor);
+      flashButton(userChosenColor);
+      checkAnswer(userSeq.length - 1);
+    }
+  });
+});
+
+
+function checkAnswer(currentIndex) {
+  if (userSeq[currentIndex] === gameSeq[currentIndex]) {
+    if (userSeq.length === gameSeq.length) {
+      setTimeout(nextSequence, 1000);
+    }
+  } else {
+    handleGameOver();
+  }
 }
 
-function btnPress() {
-      let btn = this;
-      gameFlash(btn, "bgcolor");
-      userColor = btn.getAttribute('id');
-      userSeq.push(userColor);
-      checkAns(userSeq.length - 1);
+
+function handleGameOver() {
+  if (level > highScore) {
+    highScore = level;
+    highScoreSpan.innerText = highScore;
+  }
+  statusHeading.innerHTML = `Game Over! Reached Level <strong>${level}</strong><br>Press any key to restart`;
+  document.body.classList.add("game-over");
+  setTimeout(() => {
+    document.body.classList.remove("game-over");
+  }, 400);
+  resetGame();
 }
 
-let allBtns = document.querySelectorAll('.btn');
-for (let btn of allBtns) {
-      btn.addEventListener('click', btnPress)
+function resetGame() {
+  gameSeq = [];
+  userSeq = [];
+  level = 0;
+  started = false;
 }

@@ -1,199 +1,210 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+/* Reset & Global Styles */
 * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Fira Code",
-            monospace;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Theme Colors */
+  --bg-color: hsl(220, 20%, 8%);
+  --bg-gradient: radial-gradient(circle at center, hsl(220, 25%, 12%) 0%, hsl(220, 30%, 5%) 100%);
+  --text-primary: hsl(0, 0%, 100%);
+  --text-secondary: hsl(220, 15%, 65%);
+  --accent-color: hsl(260, 80%, 65%);
+  
+  /* Simon Button Colors - Standard (Dim) */
+  --red-dim: hsl(355, 70%, 35%);
+  --green-dim: hsl(145, 70%, 30%);
+  --blue-dim: hsl(215, 75%, 35%);
+  --yellow-dim: hsl(45, 75%, 35%);
+
+  /* Simon Button Colors - Active (Glow) */
+  --red-flash: hsl(355, 95%, 55%);
+  --green-flash: hsl(145, 85%, 50%);
+  --blue-flash: hsl(215, 95%, 55%);
+  --yellow-flash: hsl(45, 95%, 50%);
+
+  /* Card Background (Glassmorphism) */
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --card-shadow: rgba(0, 0, 0, 0.4);
 }
 
 body {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      gap: 2rem;
-      justify-content: center;
-      padding: 2rem;
-      color: azure;
-      background: linear-gradient(to right, #00dbde, #fc00ff);
-      height: 100vh;
-      width: 100%;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow: hidden;
+  transition: background-color 0.2s ease;
 }
 
-.main-div {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      width: 100%;
-      height: auto;
-      padding: 2rem 4rem;
-      border-radius: 1rem;
+/* Game Over Flash Class */
+body.game-over {
+  animation: red-flash-animation 0.4s ease-out;
 }
 
-.container {
-      width: 100%;
-      height: auto;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 3rem;
-      border-radius: 1rem;
-      position: relative;
+@keyframes red-flash-animation {
+  0% { background: var(--bg-color); }
+  50% { background: hsl(0, 80%, 25%); }
+  100% { background: var(--bg-gradient); }
 }
 
-.content-div {
-      width: 50%;
-      padding: 2rem;
-      text-align: center;
+/* Layout Container */
+.game-container {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 24px 64px var(--card-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 32px;
+  padding: 40px;
+  text-align: center;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  transition: transform 0.3s ease;
 }
 
-.content-div h2 {
-      font-size: 2.8rem;
+/* Typography styling */
+.game-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, hsl(260, 80%, 75%), hsl(300, 85%, 65%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
-.game-div {
-      width: 50%;
-      display: flex;
-      justify-content: center;
+.game-header h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  min-height: 48px; /* Prevents layout shifting when text updates */
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
 
-.btn-container {
-      width: 25rem;
-      height: 25rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      padding: 2rem;
-      position: fixed;
-      place-items: center;
-      position: relative;
-      overflow: hidden;
-      border-radius: 1rem;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+.score-display {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(147, 51, 234, 0.1);
+  padding: 6px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  border: 1px solid rgba(147, 51, 234, 0.15);
 }
 
-.btn-container::before {
-      position: absolute;
-      content: "";
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: 150px;
-      width: 150px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      z-index: 1;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+/* Simon Board (2x2 Grid) */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 320px;
 }
 
-
-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 3;
-      padding: 1rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      font-size: 1.3rem;
-      color: azure;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-
-      &:active {
-            scale: 0.99;
-      }
+/* Simon Button Base Styling */
+.simon-btn {
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  outline: none;
+  aspect-ratio: 1 / 1;
+  transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: inset 0 8px 16px rgba(0, 0, 0, 0.25), 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.btn {
-      height: 71%;
-      width: 71%;
-      position: absolute;
+.simon-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.15);
 }
 
+.simon-btn:active {
+  transform: scale(0.95);
+}
+
+/* Button Colors */
 .red {
-      background-color: #e74c3c;
-      transform: rotate(45deg);
-      bottom: -35%;
-
-      &:hover {
-            background-color: #f41b03;
-      }
-}
-
-.yellow {
-      background-color: #eec523;
-      transform: rotate(45deg);
-      left: -35%;
-
-      &:hover {
-            background-color: #ffcc00;
-      }
+  background-color: var(--red-dim);
+  border-bottom: 4px solid hsl(355, 70%, 25%);
 }
 
 .green {
-      background-color: #2ecc71;
-      transform: rotate(45deg);
-      right: -35%;
-
-      &:hover {
-            background-color: #00ff6a;
-      }
+  background-color: var(--green-dim);
+  border-bottom: 4px solid hsl(145, 70%, 20%);
 }
 
 .blue {
-      background-color: #3498db;
-      transform: rotate(45deg);
-      top: -35%;
-
-      &:hover {
-            background-color: #018fed;
-      }
+  background-color: var(--blue-dim);
+  border-bottom: 4px solid hsl(215, 75%, 25%);
 }
 
-.flash {
-      background-color: #fff;
+.yellow {
+  background-color: var(--yellow-dim);
+  border-bottom: 4px solid hsl(45, 75%, 25%);
 }
 
-.bgcolor {
-      background-color: green;
+/* Active Flashing State */
+.red.flash {
+  background-color: var(--red-flash) !important;
+  box-shadow: 0 0 35px var(--red-flash), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
 }
 
-@media (width<=1051px) {
-      .container {
-            flex-direction: column;
-            padding: 1rem;
-            height: auto;
-      }
+.green.flash {
+  background-color: var(--green-flash) !important;
+  box-shadow: 0 0 35px var(--green-flash), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
 
-      body {
-            padding: 0;
-      }
+.blue.flash {
+  background-color: var(--blue-flash) !important;
+  box-shadow: 0 0 35px var(--blue-flash), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
 
-      .main-div {
-            padding: 1rem 2rem;
-      }
+.yellow.flash {
+  background-color: var(--yellow-flash) !important;
+  box-shadow: 0 0 35px var(--yellow-flash), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
 
-      .content-div {
-            padding: 1rem;
-            width: 100%;
-      }
+/* Footer Styling */
+.game-footer {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding: 0 10px;
+}
 
-      .game-div {
-            padding: 0;
-            width: 100%;
-      }
+/* Responsive adjustments */
+@media (max-width: 400px) {
+  .game-container {
+    padding: 24px;
+    border-radius: 24px;
+  }
+  .game-header h1 {
+    font-size: 2.2rem;
+  }
+  .game-board {
+    gap: 15px;
+  }
+  .simon-btn {
+    border-radius: 18px;
+  }
 }
